@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" fill="none">
+  <rect width="960" height="600" fill="#E4E9ED"/>
+  <rect x="48" y="48" width="864" height="504" rx="8" stroke="#9AA8B5" stroke-width="2" stroke-dasharray="12 10"/>
+  <text x="480" y="290" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="28" fill="#3D4A5C">Prévia indisponível</text>
+  <text x="480" y="330" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="18" fill="#6B7787">Abra a demo no link</text>
+</svg>

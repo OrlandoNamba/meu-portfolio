@@ -1,0 +1,20 @@
+---
+import { site } from "../data/site";
+---
+
+<section id="sobre" class="section sobre" aria-labelledby="sobre-title">
+  <div class="section__inner">
+    <h2 id="sobre-title" class="section__label">{site.about.title}</h2>
+    <p class="sobre__body">{site.about.body}</p>
+  </div>
+</section>
+
+<style>
+  .sobre__body {
+    margin: 0;
+    max-width: 40rem;
+    font-size: clamp(1.125rem, 2vw, 1.25rem);
+    line-height: 1.65;
+    color: var(--ink-muted);
+  }
+</style>

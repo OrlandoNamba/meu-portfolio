@@ -1,0 +1,59 @@
+---
+import { site } from "../data/site";
+import { skillGroups } from "../data/skills";
+---
+
+<section id="skills" class="section" aria-labelledby="skills-title">
+  <div class="section__inner">
+    <h2 id="skills-title" class="section__label">{site.skills.title}</h2>
+    <div class="skills__list">
+      {
+        skillGroups.map((group) => (
+          <div class="skills__group">
+            <h3 class="skills__group-label">{group.label}</h3>
+            <p class="skills__items">
+              {group.items.map((item, i) => (
+                <>
+                  {i > 0 && <span class="skills__sep" aria-hidden="true"> · </span>}
+                  <span>{item}</span>
+                </>
+              ))}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .skills__list {
+    display: grid;
+    gap: 1.75rem;
+    max-width: 42rem;
+  }
+
+  .skills__group-label {
+    margin: 0 0 0.45rem;
+    font-size: var(--type-small);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-subtle);
+  }
+
+  .skills__items {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 2.2vw, 1.5rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.45;
+    color: var(--ink);
+  }
+
+  .skills__sep {
+    color: var(--ink-subtle);
+    font-weight: 500;
+  }
+</style>

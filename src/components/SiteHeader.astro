@@ -1,0 +1,334 @@
+---
+import { site } from "../data/site";
+import ThemeToggle from "./ThemeToggle.astro";
+---
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-header__brand" href="#topo">{site.name}</a>
+
+    <div class="site-header__actions">
+      <ThemeToggle />
+      <button
+        type="button"
+        class="site-header__menu-btn"
+        id="site-menu-btn"
+        aria-expanded="false"
+        aria-controls="site-nav"
+        aria-label="Abrir menu"
+      >
+        <span class="site-header__menu-icon" aria-hidden="true">
+          <span class="site-header__menu-bar"></span>
+          <span class="site-header__menu-bar"></span>
+          <span class="site-header__menu-bar"></span>
+        </span>
+      </button>
+    </div>
+
+    <nav class="site-header__nav" id="site-nav" aria-label="Principal">
+      <ul>
+        {
+          site.nav.map((item) => (
+            <li>
+              <a href={item.href}>{item.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const MENU_BTN_ID = "site-menu-btn";
+  const NAV_ID = "site-nav";
+  const OPEN_CLASS = "is-open";
+  const MQ_DESKTOP = "(min-width: 768px)";
+
+  let menuAbort: AbortController | null = null;
+
+  function setOpen(btn: HTMLButtonElement, nav: HTMLElement, open: boolean) {
+    btn.setAttribute("aria-expanded", String(open));
+    btn.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
+    nav.classList.toggle(OPEN_CLASS, open);
+    document.body.classList.toggle("menu-open", open);
+  }
+
+  function initMenu() {
+    const btn = document.getElementById(MENU_BTN_ID);
+    const nav = document.getElementById(NAV_ID);
+    if (!(btn instanceof HTMLButtonElement) || !nav) return;
+
+    menuAbort?.abort();
+    menuAbort = new AbortController();
+    const { signal } = menuAbort;
+
+    setOpen(btn, nav, false);
+
+    btn.addEventListener(
+      "click",
+      () => {
+        const open = btn.getAttribute("aria-expanded") !== "true";
+        setOpen(btn, nav, open);
+        if (open) {
+          nav.querySelector<HTMLAnchorElement>("a")?.focus();
+        }
+      },
+      { signal },
+    );
+
+    nav.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => setOpen(btn, nav, false), { signal });
+    });
+
+    document.addEventListener(
+      "keydown",
+      (event) => {
+        if (event.key === "Escape" && btn.getAttribute("aria-expanded") === "true") {
+          setOpen(btn, nav, false);
+          btn.focus();
+        }
+      },
+      { signal },
+    );
+
+    window.matchMedia(MQ_DESKTOP).addEventListener(
+      "change",
+      (event) => {
+        if (event.matches) setOpen(btn, nav, false);
+      },
+      { signal },
+    );
+  }
+
+  initMenu();
+  document.addEventListener("astro:after-swap", initMenu);
+</script>
+
+<style is:global>
+  body.menu-open {
+    overflow: hidden;
+  }
+</style>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: var(--header-h);
+    backdrop-filter: blur(10px);
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+  }
+
+  .site-header__inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    max-width: var(--max-width);
+    height: 100%;
+    margin-inline: auto;
+    padding-inline: var(--space-content);
+  }
+
+  .site-header__brand {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    text-decoration: none;
+    white-space: nowrap;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .site-header__brand:hover {
+    color: var(--signal);
+  }
+
+  .site-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-inline-start: auto;
+    flex-shrink: 0;
+  }
+
+  .site-header__menu-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg-elevated);
+    color: var(--ink);
+    cursor: pointer;
+    transition:
+      border-color var(--duration) var(--ease-out),
+      color var(--duration) var(--ease-out),
+      background-color var(--duration) var(--ease-out);
+  }
+
+  .site-header__menu-btn:hover {
+    border-color: var(--signal);
+    color: var(--signal);
+  }
+
+  .site-header__menu-btn:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  .site-header__menu-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 18px;
+  }
+
+  .site-header__menu-bar {
+    display: block;
+    height: 2px;
+    width: 100%;
+    border-radius: 1px;
+    background: currentColor;
+    transition:
+      transform var(--duration) var(--ease-out),
+      opacity var(--duration) var(--ease-out);
+    transform-origin: center;
+  }
+
+  .site-header__menu-btn[aria-expanded="true"] .site-header__menu-bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .site-header__menu-btn[aria-expanded="true"] .site-header__menu-bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .site-header__menu-btn[aria-expanded="true"] .site-header__menu-bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .site-header__nav {
+    position: absolute;
+    inset-inline: 0;
+    top: 100%;
+    z-index: 40;
+    padding: 0.75rem var(--space-content) 1rem;
+    background: color-mix(in srgb, var(--bg) 94%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+    box-shadow: 0 12px 28px color-mix(in srgb, var(--ink) 8%, transparent);
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-0.35rem);
+    transition:
+      opacity var(--duration) var(--ease-out),
+      transform var(--duration) var(--ease-out),
+      visibility var(--duration) var(--ease-out);
+  }
+
+  .site-header__nav.is-open {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .site-header__nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .site-header__nav a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding-inline: 0.75rem;
+    color: var(--ink-muted);
+    text-decoration: none;
+    font-size: var(--type-small);
+    font-weight: 500;
+    border-radius: var(--radius);
+    border-inline-start: 2px solid transparent;
+  }
+
+  .site-header__nav a:hover {
+    color: var(--signal);
+    background: color-mix(in srgb, var(--signal-soft) 55%, transparent);
+    border-inline-start-color: var(--signal);
+  }
+
+  .site-header__nav a:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  @media (min-width: 768px) {
+    .site-header__brand {
+      font-size: 1rem;
+    }
+
+    .site-header__menu-btn {
+      display: none;
+    }
+
+    .site-header__actions {
+      order: 3;
+      margin-inline-start: 0;
+    }
+
+    .site-header__nav {
+      position: static;
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      order: 2;
+      padding: 0;
+      background: transparent;
+      backdrop-filter: none;
+      border: none;
+      box-shadow: none;
+      visibility: visible;
+      opacity: 1;
+      pointer-events: auto;
+      transform: none;
+      transition: none;
+    }
+
+    .site-header__nav ul {
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: center;
+      gap: 0.25rem 1rem;
+    }
+
+    .site-header__nav a {
+      display: inline-flex;
+      padding-inline: 0;
+      border-inline-start: none;
+      background: transparent;
+      font-size: var(--type-small);
+    }
+
+    .site-header__nav a:hover {
+      background: transparent;
+      border-inline-start-color: transparent;
+    }
+  }
+</style>

@@ -1,0 +1,92 @@
+---
+import { site } from "../data/site";
+import { projects } from "../data/projects";
+import ProjectCard from "./ProjectCard.astro";
+---
+
+<section id="projetos" class="section" aria-labelledby="projetos-title">
+  <div class="section__inner">
+    <h2 id="projetos-title" class="section__label">{site.projects.title}</h2>
+    <p class="section__support">{site.projects.support}</p>
+    <div class="projetos__grid">
+      {projects.map((project) => <ProjectCard project={project} />)}
+    </div>
+    <p class="projetos__github">
+      {site.projects.github.lead}{" "}
+      <a href={site.projects.github.href} target="_blank" rel="noopener noreferrer">
+        {site.projects.github.label}
+      </a>
+    </p>
+  </div>
+</section>
+
+<script>
+  function revealProjects() {
+    const cards = document.querySelectorAll<HTMLElement>("[data-reveal]");
+    if (!cards.length) return;
+
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) {
+      cards.forEach((card) => {
+        card.classList.remove("is-reveal-pending");
+        card.classList.add("is-visible");
+      });
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.remove("is-reveal-pending");
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.18, rootMargin: "0px 0px -8% 0px" },
+    );
+
+    cards.forEach((card) => {
+      card.classList.add("is-reveal-pending");
+      observer.observe(card);
+    });
+  }
+
+  revealProjects();
+  document.addEventListener("astro:after-swap", revealProjects);
+</script>
+
+<style>
+  .projetos__grid {
+    display: grid;
+    gap: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  @media (min-width: 860px) {
+    .projetos__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem 2.5rem;
+      align-items: start;
+    }
+  }
+
+  .projetos__github {
+    margin: 2rem 0 0;
+    color: var(--ink-muted);
+  }
+
+  .projetos__github a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--ink);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .projetos__github a:hover {
+    color: var(--signal);
+  }
+</style>

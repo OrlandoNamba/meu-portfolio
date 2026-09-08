@@ -1,0 +1,96 @@
+---
+import { site } from "../data/site";
+
+const primary = Object.values(site.links).filter((l) => l.primary);
+const secondary = Object.values(site.links).filter((l) => !l.primary);
+---
+
+<section id="contato" class="section contato" aria-labelledby="contato-title">
+  <div class="section__inner">
+    <h2 id="contato-title" class="section__label">{site.contact.title}</h2>
+    <p class="section__support">{site.contact.support}</p>
+
+    <ul class="contato__primary">
+      {
+        primary.map((link) => (
+          <li>
+            <a
+              class="btn btn--primary"
+              href={link.href}
+              target={link.href.startsWith("mailto:") ? undefined : "_blank"}
+              rel={link.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    {
+      secondary.length > 0 && (
+        <ul class="contato__secondary">
+          {secondary.map((link) => (
+            <li>
+              <a href={link.href} target="_blank" rel="noopener noreferrer">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="section__inner">
+    <p>© {new Date().getFullYear()} {site.name}</p>
+  </div>
+</footer>
+
+<style>
+  .contato__primary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 0 0 1.75rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .contato__secondary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .contato__secondary a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--ink-muted);
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .contato__secondary a:hover {
+    color: var(--signal);
+  }
+
+  .site-footer {
+    position: relative;
+    z-index: 1;
+    padding: 2rem var(--space-content);
+    border-top: 1px solid var(--border);
+    color: var(--ink-subtle);
+    font-size: var(--type-small);
+  }
+
+  .site-footer p {
+    margin: 0;
+  }
+</style>

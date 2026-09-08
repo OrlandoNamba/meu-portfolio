@@ -246,9 +246,11 @@ Conteúdo detalhado de cada papel: **só na skill**. Subagente = ponte curta.
 
 | Item | Status |
 |------|--------|
-| Stack escolhida | ❌ |
-| Site no ar | ❌ |
-| Seções MVP (hero, sobre, projetos, skills, contato) | ❌ |
+| Stack escolhida | ✅ Astro 5 + TS (`docs/arquitetura-mvp.md`) |
+| Specs produto/UX | ✅ `docs/mvp-produto.md`, `stories-mvp.md`, `direcao-visual-mvp.md` |
+| Site implementado | ✅ Astro MVP na `dev` (QA GO) |
+| Site no ar | ❌ (aguardando DevOps / Orlando) |
+| Seções MVP (hero, sobre, projetos, skills, contato) | ✅ código; copy provisória `[validar]` |
 
 ### Fase 2 da automação (pendente)
 
@@ -282,6 +284,18 @@ O Prompt Engineer edita este arquivo quando:
 ---
 
 ## 9. Changelog
+
+### 2026-08-10 — Padrão CSS mobile-first
+- **Autor:** Prompt Engineer (via Orlando)
+- **Motivo:** Responsividade consistente em todos os sites
+- **Alterações:** Rule `.cursor/rules/css-mobile-first.mdc`; skill Frontend com mobile-first; CSS do site alinhado (`min-width` only)
+
+### 2026-08-10 — Kickoff MVP (PO → BA → Arquiteto → UX)
+- **Autor:** Prompt Engineer (via Orlando)
+- **Motivo:** Criar o site com 2 demos no ar; sem domínio; PT; light+dark
+- **Alterações:**
+  - Docs: `mvp-produto.md`, `stories-mvp.md`, `arquitetura-mvp.md`, `direcao-visual-mvp.md`
+  - Stack: Astro 5; contato só links (sem Backend); próximos: Frontend → QA → DevOps
 
 ### 2026-08-10 — Bootstrap equipe de IA
 - **Autor:** Prompt Engineer (via Orlando)

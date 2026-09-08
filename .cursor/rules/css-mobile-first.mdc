@@ -1,0 +1,13 @@
+---
+description: CSS responsivo obrigatoriamente mobile-first neste repositório
+globs: "**/*.{css,astro,scss}"
+alwaysApply: false
+---
+
+# CSS mobile-first
+
+- Estilos base = mobile (viewport estreito)
+- Breakpoints de layout: apenas `@media (min-width: …)`
+- Evitar `@media (max-width: …)` para layout; só override pontual justificado
+- `prefers-reduced-motion` e outros media features não-visuais ok
+- Preferir `clamp()` + mobile-first em vez de desktop-first com max-width

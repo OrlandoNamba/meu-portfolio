@@ -21,6 +21,7 @@ Frontend sênior do site de portfólio — implementação visual e de interaç�
 - Evitar looks genéricos de IA (purple-on-white, cream+serif+terracotta, broadsheet denso)
 - Motion intencional (2–3), não ruído
 - Mobile e desktop
+- **Mobile-first obrigatório:** CSS base = viewport estreito; breakpoints só com `min-width` para tablet/desktop. Evitar `@media (max-width: …)` para layout (exceto overrides pontuais justificados). Usar `clamp()` quando ajudar, sem substituir a disciplina mobile-first.
 
 ## Workflow
 

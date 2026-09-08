@@ -1,0 +1,185 @@
+@import "./tokens.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 0.75rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  font-size: var(--type-body);
+  line-height: 1.6;
+  color: var(--ink);
+  background-color: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: var(--signal);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  transition: color var(--duration) var(--ease-out);
+}
+
+a:hover {
+  color: var(--signal-hover);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--space-content);
+  top: -100%;
+  z-index: 100;
+  padding: 0.65rem 1rem;
+  background: var(--bg-elevated);
+  color: var(--ink);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 0.75rem;
+}
+
+.site-main {
+  position: relative;
+  z-index: 1;
+}
+
+.section {
+  padding: var(--space-section) var(--space-content);
+}
+
+.section__inner {
+  max-width: var(--max-width);
+  margin-inline: auto;
+}
+
+.section__label {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-display);
+  font-size: var(--type-h2);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.section__support {
+  margin: 0 0 2.5rem;
+  max-width: 36rem;
+  color: var(--ink-muted);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.7rem 1.25rem;
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition:
+    background-color var(--duration) var(--ease-out),
+    color var(--duration) var(--ease-out),
+    border-color var(--duration) var(--ease-out);
+}
+
+.btn--primary {
+  background: var(--signal);
+  color: #fff;
+}
+
+[data-theme="dark"] .btn--primary {
+  color: #04120f;
+}
+
+.btn--primary:hover {
+  background: var(--signal-hover);
+  color: #fff;
+}
+
+[data-theme="dark"] .btn--primary:hover {
+  color: #04120f;
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--border-strong);
+}
+
+.btn--ghost:hover {
+  border-color: var(--signal);
+  color: var(--signal);
+}
+
+/* Atmosphere layer */
+.atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 80% 60% at 12% 18%, var(--atmosphere-accent) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 50% at 88% 8%, var(--atmosphere-a) 0%, transparent 50%),
+    linear-gradient(165deg, var(--atmosphere-b) 0%, var(--bg) 45%, var(--atmosphere-a) 100%);
+}
+
+.atmosphere__grid {
+  position: absolute;
+  inset: -10%;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.35;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 20%, #000 20%, transparent 75%);
+  animation: atmosphere-drift 28s linear infinite;
+}
+
+@keyframes atmosphere-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-48px, -24px, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .atmosphere__grid {
+    animation: none;
+  }
+}
