@@ -45,7 +45,9 @@ const secondary = Object.values(site.links).filter((l) => !l.primary);
 
 <footer class="site-footer">
   <div class="section__inner">
-    <p>© {new Date().getFullYear()} {site.name}</p>
+    <p>
+      © {new Date().getFullYear()}. Todos os direitos reservados. · Desenvolvido por {site.name}
+    </p>
   </div>
 </footer>
 
@@ -88,6 +90,7 @@ const secondary = Object.values(site.links).filter((l) => !l.primary);
     border-top: 1px solid var(--border);
     color: var(--ink-subtle);
     font-size: var(--type-small);
+    text-align: center;
   }
 
   .site-footer p {
