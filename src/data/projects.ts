@@ -26,4 +26,13 @@ export const projects: Project[] = [
     previewSrc: "/previews/nazareno-sbc.webp",
     previewAlt: "Prévia do site Igreja do Nazareno São Bernardo Central",
   },
+  {
+    slug: "cha-de-cozinha",
+    name: "Lista de Presentes para Chá de Cozinha",
+    summary:
+      "Lista de presentes interativa: reserva de item em tempo real, evitando presentes duplicados.",
+    liveUrl: "https://chadecozinha-melissa-e-orlando.netlify.app/",
+    previewSrc: "/previews/cha-de-cozinha.webp",
+    previewAlt: "Prévia do site Lista de Presentes para Chá de Cozinha",
+  },
 ];

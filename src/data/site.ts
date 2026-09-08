@@ -20,7 +20,7 @@ export const site = {
   },
   projects: {
     title: "Projetos",
-    support: "Dois produtos no ar. Abra e veja o resultado.",
+    support: "Três produtos no ar. Abra e veja o resultado.",
     github: {
       label: "Confira meu GitHub",
       href: "https://github.com/OrlandoNamba",
