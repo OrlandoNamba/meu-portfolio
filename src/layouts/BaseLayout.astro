@@ -40,10 +40,10 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : un
       (function () {
         try {
           var stored = localStorage.getItem("portfolio-theme");
-          var theme = stored === "dark" || stored === "light" ? stored : "light";
+          var theme = stored === "dark" || stored === "light" ? stored : "dark";
           document.documentElement.setAttribute("data-theme", theme);
         } catch (e) {
-          document.documentElement.setAttribute("data-theme", "light");
+          document.documentElement.setAttribute("data-theme", "dark");
         }
       })();
     </script>
